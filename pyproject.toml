@@ -44,7 +44,7 @@ dev = [
 ]
 
 [project.urls]
-repository = "<github url>"
+repository = "https://github.com/harryjjun/harry-dataproc"
 
 [tool.ruff]
 fix = true
