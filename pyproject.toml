@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataproc"
+# build 도구가 git tag 등을 이용해 자동으로 패키지 버전을 추가하도록 한다
+dynamic = ["version"]
+# 이 패키지가 지원하는 파이썬 최소 버전
+requires-python = ">=3.12"
+description = "data processing exercise library"
+readme = "README.md"
+authors = [
+    { name = "Harry", email = "harry@forestsoft.co.kr" },
+]
+# PyPI에 패키지를 publish하는 경우에 검색을 돕는 정보들
+classifiers = [
+    # 이 프로젝트가 지원하는 파이썬 버전
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["data engineering", "data processing"]
+# 라이브러리 실행에 필수적인 패키지들
+dependencies = [
+    "pandas[performance,plot,parquet,aws,compression]",
+]
+
+# 상황에 따라 선택적으로 필요한 패키지들
+[project.optional-dependencies]
+# 개발 환경 구성을 위해 필요한 패키지들
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pre-commit",
+    "sphinx",
+    "sphinx-autoapi",
+    "pydata-sphinx-theme",
+    "sphinxcontrib-mermaid",
+    "build",
+    "twine",
+]
+
+[project.urls]
+repository = "<github url>"
+
+[tool.ruff]
+fix = true
+# .gitignore 파일에 있는 디렉토리와 파일을 자동으로 제외된다
+# Same as Black
+line-length = 88
+indent-width = 4
+
+# 지정하지 않으면 requires-python 값에서 유추
+# Assume Python 3.12
+# target-version = "py312"
+
+[tool.ruff.lint]
+select = ["I"]  # Enable import sorting rules
+
+[tool.mypy]
+#warn_return_any = true
+warn_unused_configs = true
+#strict = true
+exclude = ["tests/"]
+
+[tool.pytest]
+addopts = ["--import-mode=importlib"]

@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+dataproc = {path = ".", editable = true}
+
+[dev-packages]
+ruff = "*"
+mypy = "*"
+pytest = "*"
+pytest-cov = "*"
+pre-commit = "*"
+sphinx = "*"
+sphinx-autoapi = "*"
+pydata-sphinx-theme = "*"
+sphinxcontrib-mermaid = "*"
+build = "*"
+twine = "*"
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.13"
