@@ -35,11 +35,9 @@ DATASTRINGS = [
 ]
 
 
-"""
-@pytest.mark.parametrize
-목적 : 같은 테스트 함수를 여러 입력으로 반복 실행
-출력 : 4개 케이스 = 4개 독립 테스트
-"""
+# @pytest.mark.parametrize
+# 목적 : 같은 테스트 함수를 여러 입력으로 반복 실행
+# 출력 : 4개 케이스 = 4개 독립 테스트
 
 
 # 1. test_str_to_datetime 함수 (parameterized)
@@ -52,7 +50,8 @@ def test_str_to_datetime(input_str, expected_dt, expected_unix, expectation):
 
     정상 케이스와 ValueError 발생 케이스를 nullcontext / pytest.raises로 통합.
     """
-    with expectation:  # 같은 인터페이스로 두 시나리오 처리
+    # 같은 인터페이스로 두 시나리오(정상 케이스, ValueError 발생 케이스) 처리
+    with expectation:
         result = str_to_datetime(input_str)
         assert result == expected_dt
 
