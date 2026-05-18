@@ -25,6 +25,29 @@ pipenv install -e .
 
 ---
 
+## 빌드와 배포
+
+이 패키지의 wheel을 빌드하려면:
+
+```bash
+pipenv install build --dev   # 처음 한 번만
+python -m build
+```
+
+빌드 결과는 `dist/` 디렉토리에 생성된다.
+
+- `dataproc-X.Y.Z-py3-none-any.whl` — 빌드된 배포물 (wheel)
+- `dataproc-X.Y.Z.tar.gz` — 소스 배포물 (sdist)
+
+빌드된 wheel을 다른 환경에서 설치하려면:
+
+```bash
+pip install path/to/dataproc-0.1.2-py3-none-any.whl
+```
+
+
+---
+
 ## 사용 예시
 
 문자열을 datetime 객체로 변환:
@@ -34,6 +57,7 @@ from dataproc import str_to_datetime
 
 dt = str_to_datetime("2024-05-01T10:30:00")
 # datetime.datetime(2024, 5, 1, 10, 30)
+# print 호출시 : 2024-05-01 10:30:00
 
 dt = str_to_datetime("2024-05-01 10:30")  # 공백 구분도 지원
 ```
@@ -65,8 +89,10 @@ dataproc/
 │   └── io.py            # (예약)
 ├── tests/               # 유닛 테스트
 ├── docs/                # sphinx 프로젝트 문서
+├── dist/                # 빌드 산출물 (wheel + sdist, gitignore)
 ├── pyproject.toml       # 패키지 메타 + 빌드 설정
 ├── Pipfile              # 개발 환경 의존성
+├── Pipfile.lock         # 정확한 버전 잠금
 └── README.md
 ```
 
@@ -78,7 +104,7 @@ dataproc/
 
 이 패키지의 의존성은 두 곳에서 관리된다.
 
-**`pyproject.toml`의 `dependencies`** — 어떤 범위의 패키지가 호환되는지 명시한다. 예: `pandas>=2.0,<3.0`. 이것은 사용자가 본인 환경에 본인 버전의 pandas와 함께 dataproc을 설치할 때, 어디까지 호환을 보장할지 약속하는 부분이다. MAJOR 단위로 호환을 보장한다.
+**`pyproject.toml`의 `dependencies`** — 어떤 범위의 패키지가 호환되는지 명시한다. 예: `pandas>=2.0,<3.0`, `numpy>=2.0,<3.0`. 이것은 사용자가 본인 환경에 본인 버전의 pandas와 함께 dataproc을 설치할 때, 어디까지 호환을 보장할지 약속하는 부분이다. MAJOR 단위로 호환을 보장한다.
 
 **`Pipfile.lock`** — 현재 개발 환경에 정확히 어떤 버전이 깔려 있는지 비트 단위로 기록한 스냅샷이다. 예: `pandas==2.3.3`. 이것은 개발팀 내에서 동일한 환경을 재현하기 위한 정보다. 라이브러리를 배포할 때는 이 lock 파일은 사용자에게 영향을 주지 않는다 (라이브러리 사용자는 `pyproject.toml`의 범위 안에서 자기 환경의 pandas 버전을 자유롭게 사용).
 
