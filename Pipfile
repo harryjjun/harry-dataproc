@@ -19,6 +19,7 @@ build = "*"
 twine = "*"
 sphinx-design = "*"
 myst-parser = "*"
+setuptools-scm = "*"
 
 [requires]
 python_version = "3.12"
