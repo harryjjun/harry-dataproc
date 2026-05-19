@@ -1,0 +1,40 @@
+# Python 가상환경 & 캐시
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 빌드 산출물
+build/
+dist/
+*.whl
+*.tar.gz
+
+# Git
+.git/
+.gitignore
+
+# 개발 도구
+.pre-commit-config.yaml
+
+# pipenv (Docker는 pip 직접 사용)
+Pipfile
+Pipfile.lock
+
+# 문서 (운영 컨테이너엔 불필요)
+docs/
+
+# 테스트 (운영 컨테이너엔 불필요)
+tests/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# 환경 설정
+.python-version
