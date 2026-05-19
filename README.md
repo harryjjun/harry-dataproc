@@ -99,16 +99,80 @@ $ dataproc --help
 
 ---
 
+## Docker로 사용하기
+
+이 패키지는 Docker 컨테이너로도 실행 가능하다. Python 환경 설정 없이 
+어떤 시스템에서도 동일하게 동작한다.
+
+### 이미지 빌드
+
+저장소를 clone한 후 빌드:
+
+```bash
+git clone https://github.com/harryjjun/harry-dataproc
+cd harry-dataproc
+docker build -t dataproc:0.2.1 .
+```
+
+빌드 결과 이미지는 약 260MB이며, pandas와 의존 패키지가 모두 포함된다.
+
+### 컨테이너 실행
+
+도움말:
+
+```bash
+docker run --rm dataproc:0.2.1
+```
+
+문자열을 unix microseconds로 변환:
+
+```bash
+docker run --rm dataproc:0.2.1 to-unixtime "2024-05-01 10:30"
+# 1714527000000000
+```
+
+문자열을 datetime으로 변환:
+
+```bash
+docker run --rm dataproc:0.2.1 to-datetime "2024-05-01T10:30:00"
+# 2024-05-01 10:30:00
+```
+
+`--rm`은 종료 후 컨테이너 자동 삭제 옵션이다.
+
+### 데이터 파이프라인에서 사용
+
+결과는 stdout으로, 로그는 stderr로 분리되어 출력되므로 
+파이프 명령에서 자연스럽게 사용 가능하다:
+
+```bash
+docker run --rm dataproc:0.2.1 to-unixtime "2024-05-01 10:30" | awk '{print $1+1}'
+# 1714527000000001
+```
+
+### Docker 이미지의 setuptools-scm 처리
+
+Dockerfile은 `SETUPTOOLS_SCM_PRETEND_VERSION` 환경 변수로 패키지 버전을 
+명시한다. 컨테이너 안에는 `.git` 폴더가 없어 setuptools-scm이 git tag를 
+읽을 수 없기 때문이다. 새 버전 빌드 시 Dockerfile의 이 변수도 함께 갱신한다.
+
+---
+
 ## 프로젝트 구조
 ```
 dataproc/
 ├── src/dataproc/        # 라이브러리 소스 코드
 │   ├── __init__.py      # public API 노출
 │   ├── transform.py     # datetime/unixtime 변환 함수
+│   ├── cli.py           # CLI 진입점 (click)
 │   └── io.py            # (예약)
 ├── tests/               # 유닛 테스트
+│   ├── test_transform.py
+│   └── test_cli.py      # CLI 테스트 (CliRunner)
 ├── docs/                # sphinx 프로젝트 문서
 ├── dist/                # 빌드 산출물 (wheel + sdist, gitignore)
+├── Dockerfile           # 컨테이너 이미지 빌드 명세 
+├── .dockerignore        # Docker 빌드 컨텍스트 제외
 ├── pyproject.toml       # 패키지 메타 + 빌드 설정
 ├── Pipfile              # 개발 환경 의존성
 ├── Pipfile.lock         # 정확한 버전 잠금
