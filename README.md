@@ -80,6 +80,25 @@ ISO 8601 포맷이 아닌 입력은 `ValueError`를 발생시킨다.
 
 ---
 
+## 사용 예시 (CLI)
+
+설치 후 `dataproc` 명령으로 셸에서 직접 사용:
+
+```bash
+# 문자열 => unix microseconds
+$ dataproc to-unixtime "2024-05-01 10:30"
+1714527000000000
+
+# 문자열 => datetime
+$ dataproc to-datetime "2024-05-01T10:30:00"
+2024-05-01 10:30:00
+
+# 도움말
+$ dataproc --help
+```
+
+---
+
 ## 프로젝트 구조
 ```
 dataproc/
