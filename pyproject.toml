@@ -25,6 +25,7 @@ keywords = ["data engineering", "data processing"]
 dependencies = [
     "pandas[performance,plot,parquet,aws,compression]>=2.0,<3.0",
     "numpy>=2.0,<3.0",
+    "click>=8.0,<9.0",
 ]
 
 # 상황에 따라 선택적으로 필요한 패키지들
@@ -43,6 +44,9 @@ dev = [
     "build",
     "twine",
 ]
+
+[project.scripts]
+dataproc = "dataproc.cli:cli"
 
 [project.urls]
 repository = "https://github.com/harryjjun/harry-dataproc"
@@ -74,3 +78,4 @@ addopts = ["--import-mode=importlib"]
 where = ["src"]
 
 [tool.setuptools_scm]
+
